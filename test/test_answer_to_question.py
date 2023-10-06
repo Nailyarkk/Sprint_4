@@ -13,19 +13,18 @@ class TestAnswerToQuestion:
         (AnswerToQuestion.question5_loc, AnswerToQuestion.answer5_loc, answer_to_question5),
         (AnswerToQuestion.question6_loc, AnswerToQuestion.answer6_loc, answer_to_question6),
         (AnswerToQuestion.question7_loc, AnswerToQuestion.answer7_loc, answer_to_question7)
-    ])
+     ])
     @allure.description(
         'На странице ищем выпадающие вопросы, нажимаем на стрелочку, открывается соответствующий текст проверяем')
     def test_answer_to_questions(self, driver, question_loc, answer_to_question_loc, answer_to_question_text):
+        answer_to_question_page = AnswerToQuestion(driver)
         driver.get(url)
 
-        dropdown = driver.find_element(*question_loc)
-        driver.execute_script("arguments[0].scrollIntoView();", dropdown)
+        answer_to_question_page.find_element(*answer_to_question_page.cook).click()
+
+        dropdown = answer_to_question_page.find_question_element(question_loc)
+        answer_to_question_page.scroll_into_view(dropdown)
         dropdown.click()
 
-        answer = driver.find_element(*answer_to_question_loc)
-        answer_text = answer.text
-
+        answer_text = answer_to_question_page.get_element_text(answer_to_question_loc)
         assert answer_text == answer_to_question_text
-
-
