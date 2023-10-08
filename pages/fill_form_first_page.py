@@ -1,8 +1,21 @@
 from selenium.webdriver.common.by import By
 from constants import *
 import allure
-from base_page import BasePage
 
+class BasePage:
+    def __init__(self, driver):
+        self.driver = driver
+
+    def find_element(self, *locator):
+        return self.driver.find_element(*locator)
+
+    def click_element(self, *locator):
+        self.find_element(*locator).click()
+
+    def send_keys(self, *locator, value):
+        element = self.find_element(*locator)
+        element.clear()
+        element.send_keys(value)
 
 class FillFormFirst(BasePage):
     name = (By.XPATH, "//input[@placeholder='* Имя']")

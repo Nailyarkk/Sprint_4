@@ -5,6 +5,7 @@ class TestSwitchScooter:
     @allure.description(
         'Переход по лого "Яндекс"')
     def test_switch_scooter(self):
+        self.driver.get(url)
 
         order_page_logo_yandex = CheckLogoYandex(self.driver)
         order_page_logo_yandex.check_click_logo_yandex()
