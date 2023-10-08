@@ -1,43 +1,40 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from pages.base_page import BasePage
+from constants import *
 
 
-class BasePage:
-    def __init__(self, driver):
-        self.driver = driver
 class AnswerToQuestion(BasePage):
 
-    cook = (By.XPATH,"//button[text()='да все привыкли']")
-    question0_loc = (By.XPATH, '//*[@id="accordion__heading-0"]')
-    answer0_loc = (By.XPATH, '//*[@id="accordion__panel-0"]/p')
-    question1_loc = (By.XPATH, '//*[@id="accordion__heading-1"]')
-    answer1_loc = (By.XPATH, '//*[@id="accordion__panel-1"]/p')
-    question2_loc = (By.XPATH, '//*[@id="accordion__heading-2"]')
-    answer2_loc = (By.XPATH, '//*[@id="accordion__panel-2"]/p')
-    question3_loc = (By.XPATH, '//*[@id="accordion__heading-3"]')
-    answer3_loc = (By.XPATH, '//*[@id="accordion__panel-3"]/p')
-    question4_loc = (By.XPATH, '//*[@id="accordion__heading-4"]')
-    answer4_loc = (By.XPATH, '//*[@id="accordion__panel-4"]/p')
-    question5_loc = (By.XPATH, '//*[@id="accordion__heading-5"]')
-    answer5_loc =(By.XPATH, '//*[@id="accordion__panel-5"]/p')
-    question6_loc = (By.XPATH, '//*[@id="accordion__heading-6"]')
-    answer6_loc = (By.XPATH, '//*[@id="accordion__panel-6"]/p')
-    question7_loc = (By.XPATH, '//*[@id="accordion__heading-7"]')
-    answer7_loc = (By.XPATH, '//*[@id="accordion__panel-7"]/p')
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.cook = (By.XPATH, "//button[text()='да все привыкли']")
+        self.question_loc = [
+            (By.XPATH, f'//*[@id="accordion__heading-{i}"]') for i in range(8)
+        ]
+        self.answer_to_question_loc = [
+            (By.XPATH, f'//*[@id="accordion__panel-{i}"]/p') for i in range(8)
+        ]
 
-    def find_element(self, by, value):
-        return self.driver.find_element(by, value)
+    def check_answer(self, question_loc, answer_to_question_loc, answer_to_question_text):
+        self.go_to_url(url)
+        self.click_element(*self.cook)
+        dropdown = self.find_element(question_loc)
+        self.scroll_into_view(dropdown)
+        self.click_element(dropdown)
 
-    def find_question_element(self, question_loc):
-        return self.find_element(*question_loc)
+        answer_text = self.get_element_text(answer_to_question_loc)
+        assert answer_text == answer_to_question_text
 
-    def get_element_text(self, element_loc):
-        element = self.find_element(*element_loc)
-        return element.text
 
-    def scroll_into_view(self, element):
-        actions = ActionChains(self.driver)
-        actions.move_to_element(element).perform()
+
+
+
+
+
+
+
+
+
 
 
 
